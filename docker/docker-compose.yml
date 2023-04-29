@@ -1,0 +1,14 @@
+version: '3.1'
+
+services:
+  small_bank_db:
+    # to connect to this database from the host, use:
+    # mysql -uroot -p -h localhost -P 3306 --protocol=tcp
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 'kal1mer4!'
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./data.sql:/docker-entrypoint-initdb.d/data.sql
