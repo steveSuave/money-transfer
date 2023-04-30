@@ -49,7 +49,7 @@ class TransferServiceImplTest {
 
     transferService.transferMoney(1, 2, thousandYen, "JPY");
 
-    assertEquals(new BigDecimal("493.00"), account1.getBalance());
-    assertEquals(new BigDecimal("506.30"), account2.getBalance());
+    assertEquals(new BigDecimal("492.66"), account1.getBalance());
+    assertEquals(new BigDecimal("506.61"), account2.getBalance());
   }
 }

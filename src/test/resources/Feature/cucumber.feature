@@ -1,42 +1,34 @@
 Feature: Testing the money-transfer REST API
   Users should be able to transfer money between accounts
+  The test source and target accounts both have a currency of EUR in their test accounts
 
-#  Test ac
+#  AC 1
   Scenario: Happy path for money transfer between two accounts
-    Given account with id 1 exists with currency "EUR"
-    And account with id 1 has a balance equal to "100" of currency "EUR"
-    Then the balance of source account with id 1 should be equal to "100" of currency "EUR"
+    Given source account has a balance equal to "100.00"
+    And the target account has a balance equal to "0.00"
+    When a transaction request for "50.00" "EUR" is received
+    Then the balance of the source account should be equal to "50.00"
+    And the balance of the target account should be equal to "50.00"
 
-##  AC 1
-#  Scenario: Happy path for money transfer between two accounts
-#    Given source account with id 1 exists
-#    And target account with id 2 exists
-#    And source account has a balance greater or equal to the transaction amount 100
-#    When a transaction request is received
-#    Then the balance of source account should be debited
-#    And the balance of target account should be credited
-#
-##  AC 2
-#  Scenario: Insufficient balance to process money transfer
-#    Given source account exists
-#    And target account exists
-#    And source account has a balance less than the transaction amount
-#    When a transaction request is received
-#    Then the balance of source account should remain the same
-#    And the balance of target account should remain the same
-#    And the client of the API should receive an error
-#
-##  AC 3
-#  Scenario: Transfer between same account
-#    Given source account exists
-#    And both source and target accounts are the same
-#    When a transaction request is received
-#    Then the balance of source account should remain the same
-#    And the client of the API should receive an error
-#
-##  AC 4
-#  Scenario: One or more of the accounts does not exist
-#    Given source or target account do not exist
-#    When a transaction request is received
-#    Then the balance of the existing account should remain the same
-#    And the client of the API should receive an error
+#  AC 2
+  Scenario: Insufficient balance to process money transfer
+    Given source account has a balance equal to "10.00"
+    And the target account has a balance equal to "0.00"
+    When a transaction request for "20.00" "EUR" is received
+    Then the balance of the source account should be equal to "10.00"
+    And the balance of the target account should be equal to "0.00"
+    And the client of the API should receive an error with http status of 409
+
+#  AC 3
+  Scenario: Transfer between same account
+    Given source account has a balance equal to "100.00"
+    When a transaction request is received from the source account to itself
+    Then the balance of the source account should be equal to "100.00"
+    And the client of the API should receive an error with http status of 409
+
+#  AC 4
+  Scenario: One or more of the accounts does not exist
+    Given source account has a balance equal to "100.00"
+    When a transaction request is received with a nonexistent target account
+    Then the balance of the source account should be equal to "100.00"
+    And the client of the API should receive an error with http status of 409

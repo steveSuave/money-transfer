@@ -1,7 +1,6 @@
 package com.agileactors.moneytransfer.dto;
 
 import jakarta.validation.constraints.NotNull;
-
 import java.math.BigDecimal;
 import java.util.Objects;
 
@@ -13,6 +12,14 @@ public class ApiTransfer {
   @NotNull private String currency;
 
   public ApiTransfer() {}
+
+  public ApiTransfer(
+      Integer sourceAccountId, Integer targetAccountId, BigDecimal amount, String currency) {
+    this.sourceAccountId = sourceAccountId;
+    this.targetAccountId = targetAccountId;
+    this.amount = amount;
+    this.currency = currency;
+  }
 
   public Integer getSourceAccountId() {
     return sourceAccountId;

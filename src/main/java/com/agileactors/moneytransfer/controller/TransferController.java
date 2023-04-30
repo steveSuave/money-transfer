@@ -1,6 +1,5 @@
 package com.agileactors.moneytransfer.controller;
 
-import com.agileactors.moneytransfer.dto.ApiDeposit;
 import com.agileactors.moneytransfer.dto.ApiTransfer;
 import com.agileactors.moneytransfer.model.Account;
 import com.agileactors.moneytransfer.service.TransferService;
@@ -20,7 +19,7 @@ public class TransferController {
   }
 
   @PostMapping("/transfer")
-  public void getAccount(@Valid @RequestBody ApiTransfer apiTransfer) {
+  public void transferMoney(@Valid @RequestBody ApiTransfer apiTransfer) {
     transferService.transferMoney(
         apiTransfer.getSourceAccountId(),
         apiTransfer.getTargetAccountId(),
@@ -28,16 +27,8 @@ public class TransferController {
         apiTransfer.getCurrency());
   }
 
-  @PostMapping("/deposit")
-  public void depositAmount(@Valid @RequestBody ApiDeposit apiDeposit) {
-    transferService.depositAmount(
-            apiDeposit.getAccountId(),
-            apiDeposit.getAmount(),
-            apiDeposit.getCurrency());
-  }
-
   @GetMapping("/account/{accountId}")
-  public ResponseEntity<Account> depositAmount(@PathVariable Integer accountId) {
+  public ResponseEntity<Account> getAccount(@PathVariable Integer accountId) {
     Account account = transferService.getAccount(accountId);
     return ResponseEntity.ok(account);
   }

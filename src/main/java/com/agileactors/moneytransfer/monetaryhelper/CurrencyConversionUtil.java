@@ -27,7 +27,7 @@ public class CurrencyConversionUtil {
 
   public static BigDecimal convertToDollars(String currencyCode, BigDecimal amount) {
     BigDecimal rate = getRate(currencyCode);
-    return amount.divide(rate, RoundingMode.HALF_UP).setScale(2, RoundingMode.HALF_UP);
+    return amount.divide(rate, 2, RoundingMode.HALF_UP);
   }
 
   public static BigDecimal convertCurrencyFromTo(

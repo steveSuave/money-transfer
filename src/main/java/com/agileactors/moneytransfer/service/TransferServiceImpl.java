@@ -29,19 +29,6 @@ public class TransferServiceImpl implements TransferService {
     this.accountRepository = accountRepository;
   }
 
-  @Transactional(propagation = Propagation.REQUIRES_NEW, isolation = Isolation.SERIALIZABLE)
-  public synchronized void depositAmount(Integer accountId, BigDecimal amount, String currency) {
-    Account account =
-        accountRepository
-            .findByAccountId(accountId)
-            .orElseThrow(() -> new IllegalArgumentException("Nonexistent account"));
-
-    BigDecimal balanceAddend =
-        CurrencyConversionUtil.convertCurrencyFromTo(currency, account.getCurrency(), amount);
-
-    account.setBalance(account.getBalance().add(balanceAddend));
-    accountRepository.save(account);
-  }
 
   @Transactional(propagation = Propagation.REQUIRES_NEW, isolation = Isolation.SERIALIZABLE)
   public synchronized void transferMoney(
@@ -97,6 +84,6 @@ public class TransferServiceImpl implements TransferService {
 
     Assert.isTrue(
         balanceInDollars.compareTo(amountInDollars) >= 0,
-        "Insufficient balance in source account for transfer");
+        "Insufficient balance in source account");
   }
 }
