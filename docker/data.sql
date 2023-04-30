@@ -21,6 +21,6 @@ CREATE TABLE transfer (
   FOREIGN KEY (target_account_id) REFERENCES account(account_id)
 );
 
-INSERT INTO account (balance, currency) VALUES (1000, 'USD');
-INSERT INTO account (balance, currency) VALUES (1000, 'EUR');
-INSERT INTO account (balance, currency) VALUES (1000, 'GBP');
+--INSERT INTO account (balance, currency) VALUES (1000, 'USD');
+--INSERT INTO account (balance, currency) VALUES (1000, 'EUR');
+--INSERT INTO account (balance, currency) VALUES (1000, 'GBP');

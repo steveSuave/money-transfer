@@ -4,12 +4,11 @@ import com.agileactors.moneytransfer.dao.AccountRepository;
 import com.agileactors.moneytransfer.dao.TransferRepository;
 import com.agileactors.moneytransfer.model.Account;
 import com.agileactors.moneytransfer.model.Transfer;
+import com.agileactors.moneytransfer.monetaryhelper.CurrencyConversionUtil;
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
-
-import com.agileactors.moneytransfer.monetaryhelper.CurrencyConversionUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -28,6 +27,20 @@ public class TransferServiceImpl implements TransferService {
       TransferRepository transferRepository, AccountRepository accountRepository) {
     this.transferRepository = transferRepository;
     this.accountRepository = accountRepository;
+  }
+
+  @Transactional(propagation = Propagation.REQUIRES_NEW, isolation = Isolation.SERIALIZABLE)
+  public synchronized void depositAmount(Integer accountId, BigDecimal amount, String currency) {
+    Account account =
+        accountRepository
+            .findByAccountId(accountId)
+            .orElseThrow(() -> new IllegalArgumentException("Nonexistent account"));
+
+    BigDecimal balanceAddend =
+        CurrencyConversionUtil.convertCurrencyFromTo(currency, account.getCurrency(), amount);
+
+    account.setBalance(account.getBalance().add(balanceAddend));
+    accountRepository.save(account);
   }
 
   @Transactional(propagation = Propagation.REQUIRES_NEW, isolation = Isolation.SERIALIZABLE)
@@ -55,6 +68,12 @@ public class TransferServiceImpl implements TransferService {
     transferRepository.save(new Transfer(sourceAccountId, targetAccountId, amount, currency));
     accountRepository.save(sourceAccount);
     accountRepository.save(targetAccount);
+  }
+
+  @Override
+  public Account getAccount(Integer accountId) {
+    return accountRepository.findByAccountId(accountId)
+        .orElseThrow(() -> new IllegalArgumentException("Nonexistent account"));
   }
 
   private static Account filterAccountById(Integer accountId, List<Account> accounts) {

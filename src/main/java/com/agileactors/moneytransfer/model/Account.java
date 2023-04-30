@@ -14,6 +14,11 @@ public class Account {
 
   public Account() {}
 
+  public Account(BigDecimal balance, String currency) {
+    this.balance = balance;
+    this.currency = currency;
+  }
+
   public Account(Integer accountId, BigDecimal balance, String currency) {
     this.accountId = accountId;
     this.balance = balance;

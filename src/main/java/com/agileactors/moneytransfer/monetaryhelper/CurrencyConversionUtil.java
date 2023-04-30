@@ -14,10 +14,10 @@ public class CurrencyConversionUtil {
 
   static {
     exchangeRates.put("USD", BigDecimal.ONE);
-    exchangeRates.put("EUR", new BigDecimal("0.90509"));
-    exchangeRates.put("GBP", new BigDecimal("0.79577"));
+    exchangeRates.put("EUR", new BigDecimal("0.90"));
+    exchangeRates.put("GBP", new BigDecimal("0.79"));
     exchangeRates.put("JPY", new BigDecimal("136.27"));
-    exchangeRates.put("CAD", new BigDecimal("1.3564"));
+    exchangeRates.put("CAD", new BigDecimal("1.35"));
   }
 
   public static BigDecimal convertFromDollars(String currencyCode, BigDecimal amount) {
