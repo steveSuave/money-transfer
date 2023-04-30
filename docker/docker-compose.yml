@@ -1,9 +1,14 @@
 version: '3.1'
 
+# to spin up the containers, run from the root dir of the project:
+# docker-compose -f docker/docker-compose.yml up -d
+# docker-compose -f docker/docker-compose.yml down --remove-orphans
+
+# to connect to the database from the host:
+# mysql -uroot -p -h localhost -P 3306 --protocol=tcp
+
 services:
   small_bank_db:
-    # to connect to this database from the host, use:
-    # mysql -uroot -p -h localhost -P 3306 --protocol=tcp
     image: mysql
     restart: always
     environment:

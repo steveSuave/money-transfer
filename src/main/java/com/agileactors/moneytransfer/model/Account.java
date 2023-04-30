@@ -1,10 +1,9 @@
 package com.agileactors.moneytransfer.model;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.relational.core.mapping.Table;
-
 import java.math.BigDecimal;
 import java.util.Objects;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Table;
 
 @Table("account")
 public class Account {
@@ -14,6 +13,12 @@ public class Account {
   private String currency;
 
   public Account() {}
+
+  public Account(Integer accountId, BigDecimal balance, String currency) {
+    this.accountId = accountId;
+    this.balance = balance;
+    this.currency = currency;
+  }
 
   public Integer getAccountId() {
     return accountId;
