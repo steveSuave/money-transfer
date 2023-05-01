@@ -8,4 +8,4 @@ import org.springframework.test.annotation.DirtiesContext;
 @RunWith(Cucumber.class)
 @CucumberOptions(features = "classpath:Feature/", glue = "com.agileactors.moneytransfer.cucumber")
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-public class CucumberIntegrationTest {}
+public class CucumberRunner {}

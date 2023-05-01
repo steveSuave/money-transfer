@@ -41,6 +41,17 @@ class TransferServiceImplTest {
   }
 
   @Test
+  void testTransferToNonexistentAccount() {
+    BigDecimal hundredDollars = BigDecimal.valueOf(100);
+    when(accountRepository.findByAccountIds(List.of(1, 2)))
+        .thenReturn(List.of(new Account(1, BigDecimal.valueOf(50), "USD")));
+
+    assertThrows(
+        IllegalArgumentException.class,
+        () -> transferService.transferMoney(1, 2, hundredDollars, "USD"));
+  }
+
+  @Test
   void testTransferBetweenDifferentCurrencies() {
     BigDecimal thousandYen = BigDecimal.valueOf(1000);
     Account account1 = new Account(1, BigDecimal.valueOf(500), "USD");
