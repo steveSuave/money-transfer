@@ -18,8 +18,10 @@ CREATE TABLE transfer (
   currency CHAR(45) NOT NULL,
   PRIMARY KEY (transfer_id),
   FOREIGN KEY (source_account_id) REFERENCES account(account_id),
-  FOREIGN KEY (target_account_id) REFERENCES account(account_id)
+  FOREIGN KEY (target_account_id) REFERENCES account(account_id),
+  INDEX source_target_idx (source_account_id, target_account_id)
 );
 
- INSERT INTO account (balance, currency) VALUES (0, 'EUR');
- INSERT INTO account (balance, currency) VALUES (0, 'EUR');
+-- Test data for cucumber scenarios
+INSERT INTO account (balance, currency) VALUES (0, 'EUR');
+INSERT INTO account (balance, currency) VALUES (0, 'EUR');

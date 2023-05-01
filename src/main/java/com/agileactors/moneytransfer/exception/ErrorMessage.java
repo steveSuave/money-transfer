@@ -5,9 +5,11 @@ import java.util.Objects;
 public class ErrorMessage {
 
   private String error;
+  private String traceId;
 
-  public ErrorMessage(String error) {
+  public ErrorMessage(String error, String traceId) {
     this.error = error;
+    this.traceId = traceId;
   }
 
   public String getError() {
@@ -18,21 +20,29 @@ public class ErrorMessage {
     this.error = error;
   }
 
+  public String getTraceId() {
+    return traceId;
+  }
+
+  public void setTraceId(String traceId) {
+    this.traceId = traceId;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
     ErrorMessage that = (ErrorMessage) o;
-    return Objects.equals(error, that.error);
+    return Objects.equals(error, that.error) && Objects.equals(traceId, that.traceId);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(error);
+    return Objects.hash(error, traceId);
   }
 
   @Override
   public String toString() {
-    return "ErrorMessage{" + "message='" + error + '\'' + '}';
+    return "ErrorMessage{" + "error='" + error + '\'' + ", traceId='" + traceId + '\'' + '}';
   }
 }

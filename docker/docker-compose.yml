@@ -1,11 +1,13 @@
 version: '3.1'
 
-# to spin up the containers, run from the root dir of the project:
+# to run the containers, execute from the root dir of the project:
 # docker-compose -f docker/docker-compose.yml up -d
-# docker-compose -f docker/docker-compose.yml down --remove-orphans
 
 # to connect to the database from the host:
 # mysql -uroot -p -h localhost -P 3306 --protocol=tcp
+
+# to bring them down, discarding all data:
+# docker-compose -f docker/docker-compose.yml down --remove-orphans
 
 services:
   small_bank_db:
