@@ -22,7 +22,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-public class StepDefinition {
+public class StepDefinitions {
 
   ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
 

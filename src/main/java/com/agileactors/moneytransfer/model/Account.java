@@ -9,7 +9,7 @@ import org.springframework.data.relational.core.mapping.Table;
 public class Account {
 
   @Id private Integer accountId;
-  private BigDecimal balance;
+  private volatile BigDecimal balance;
   private String currency;
 
   public Account() {}
@@ -37,8 +37,16 @@ public class Account {
     return balance;
   }
 
-  public void setBalance(BigDecimal balance) {
+  public synchronized void setBalance(BigDecimal balance) {
     this.balance = balance;
+  }
+
+  public synchronized void addBalance(BigDecimal balance) {
+    this.balance = this.balance.add(balance);
+  }
+
+  public synchronized void subtractBalance(BigDecimal balance) {
+    this.balance = this.balance.subtract(balance);
   }
 
   public String getCurrency() {

@@ -1,14 +1,5 @@
 version: '3.1'
 
-# to run the containers, execute from the root dir of the project:
-# docker-compose -f docker/docker-compose.yml up -d
-
-# to connect to the database from the host:
-# mysql -uroot -p -h localhost -P 3306 --protocol=tcp
-
-# to bring them down, discarding all data:
-# docker-compose -f docker/docker-compose.yml down --remove-orphans
-
 services:
   small_bank_db:
     image: mysql
