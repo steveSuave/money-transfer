@@ -29,7 +29,6 @@ public class TransferServiceImpl implements TransferService {
     this.accountRepository = accountRepository;
   }
 
-
   @Transactional(propagation = Propagation.REQUIRES_NEW, isolation = Isolation.SERIALIZABLE)
   public synchronized void transferMoney(
       Integer sourceAccountId, Integer targetAccountId, BigDecimal amount, String currency) {
@@ -43,11 +42,11 @@ public class TransferServiceImpl implements TransferService {
     validateAccountAndBalance(sourceAccount, targetAccount, amount, currency);
 
     // make sure that the additions are done in the same currency
-    BigDecimal sourceBalanceSubtrahend =
-        CurrencyConversionUtil.convertCurrencyFromTo(currency, sourceAccount.getCurrency(), amount);
-
     BigDecimal targetBalanceAddend =
         CurrencyConversionUtil.convertCurrencyFromTo(currency, targetAccount.getCurrency(), amount);
+
+    BigDecimal sourceBalanceSubtrahend =
+        CurrencyConversionUtil.convertCurrencyFromTo(currency, sourceAccount.getCurrency(), amount);
 
     sourceAccount.setBalance(sourceAccount.getBalance().subtract(sourceBalanceSubtrahend));
     targetAccount.setBalance(targetAccount.getBalance().add(targetBalanceAddend));
@@ -59,7 +58,7 @@ public class TransferServiceImpl implements TransferService {
 
   @Override
   public Account getAccount(Integer accountId) {
-    return accountRepository.findByAccountId(accountId)
+    return accountRepository.findById(accountId)
         .orElseThrow(() -> new IllegalArgumentException("Nonexistent account"));
   }
 

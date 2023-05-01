@@ -26,8 +26,8 @@ public class StepDefinition {
 
   ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
 
-  @Autowired AccountRepository accountRepository;
   @Autowired private TestRestTemplate restTemplate;
+  @Autowired private AccountRepository accountRepository;
 
   private Account sourceAccount;
   private Account targetAccount;
@@ -36,8 +36,8 @@ public class StepDefinition {
   @Before
   public void setup() {
     // The test data are loaded from docker/data.sql
-    sourceAccount = accountRepository.findByAccountId(1).get();
-    targetAccount = accountRepository.findByAccountId(2).get();
+    sourceAccount = accountRepository.findById(1).get();
+    targetAccount = accountRepository.findById(2).get();
   }
 
   @After
